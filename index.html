@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Valuation - Paes Consultoria</title>
+    
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="login-screen" class="section">
+        <div class="login-container card">
+            <div class="login-logo">
+                <img src="images/paes_consultoria_logo.png" alt="Paes Consultoria">
+            </div>
+            <h2 class="text-center">Acesso ao Modelo de Valuation</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuário</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal (inicialmente oculto) -->
+    <div id="main-content" style="display: none;">
+        <!-- Barra de navegação -->
+        <nav class="navbar">
+            <div class="container navbar-container">
+                <div class="navbar-brand">
+                    <img src="images/paes_consultoria_logo.png" alt="Paes Consultoria" class="navbar-logo">
+                </div>
+                <button class="navbar-toggle" id="navbar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="navbar-menu" id="navbar-menu">
+                    <li class="navbar-item"><a href="#empresa" class="navbar-link">Empresa</a></li>
+                    <li class="navbar-item"><a href="#balanco" class="navbar-link">Balanço</a></li>
+                    <li class="navbar-item"><a href="#dre" class="navbar-link">DRE</a></li>
+                    <li class="navbar-item"><a href="#parametros" class="navbar-link">Parâmetros</a></li>
+                    <li class="navbar-item"><a href="#resultados" class="navbar-link">Resultados</a></li>
+                    <li class="navbar-item"><a href="#" id="change-password-link" class="navbar-link">Alterar Senha</a></li>
+                    <li class="navbar-item"><a href="#" id="logout-link" class="navbar-link">Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Seção de Introdução -->
+        <section class="section">
+            <div class="container">
+                <div class="card">
+                    <h1>Modelo de Valuation</h1>
+                    <p>Bem-vindo ao modelo de valuation da Paes Consultoria. Este modelo permite determinar o valor de empresas considerando diferentes cenários econômicos e financeiros.</p>
+                    <p>Para começar, preencha os dados da empresa e as informações financeiras nos formulários abaixo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Dados da Empresa -->
+        <section id="empresa" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-building"></i> Dados da Empresa</h2>
+                    </div>
+                    <form id="empresa-form">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="razao-social" class="form-label">Razão Social</label>
+                                    <input type="text" id="razao-social" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="cnpj" class="form-label">CNPJ</label>
+                                    <input type="text" id="cnpj" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endereco" class="form-label">Endereço</label>
+                            <input type="text" id="endereco" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="setor" class="form-label">Setor</label>
+                                    <select id="setor" class="form-control">
+                                        <option value="">Selecione um setor</option>
+                                        <option value="tecnologia">Tecnologia</option>
+                                        <option value="varejo">Varejo</option>
+                                        <option value="industria">Indústria</option>
+                                        <option value="servicos">Serviços</option>
+                                        <option value="energia">Energia</option>
+                                        <option value="financeiro">Financeiro</option>
+                                        <option value="saude">Saúde</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="data-analise" class="form-label">Data da Análise</label>
+                                    <input type="date" id="data-analise" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="button" class="btn btn-secondary" id="carregar-exemplo">Carregar Exemplo</button>
+                            <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Balanço Patrimonial -->
+        <section id="balanco" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-balance-scale"></i> Balanço Patrimonial</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="ano-balanco" class="form-label">Selecione o Ano</label>
+                        <select id="ano-balanco" class="form-control" style="max-width: 200px;">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Ativo</h3>
+                            <div class="form-group">
+                                <label for="ativo-circulante" class="form-label">Ativo Circulante</label>
+                                <input type="number" id="ativo-circulante" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="caixa-equivalentes" class="form-label">Caixa e Equivalentes</label>
+                                <input type="number" id="caixa-equivalentes" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="contas-receber" class="form-label">Contas a Receber</label>
+                                <input type="number" id="contas-receber" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="estoques" class="form-label">Estoques</label>
+                                <input type="number" id="estoques" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="ativo-nao-circulante" class="form-label">Ativo Não Circulante</label>
+                                <input type="number" id="ativo-nao-circulante" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="imobilizado" class="form-label">Imobilizado</label>
+                                <input type="number" id="imobilizado" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="intangivel" class="form-label">Intangível</label>
+                                <input type="number" id="intangivel" class="form-control financial-input" step="0.01">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3>Passivo</h3>
+                            <div class="form-group">
+                                <label for="passivo-circulante" class="form-label">Passivo Circulante</label>
+                                <input type="number" id="passivo-circulante" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="fornecedores" class="form-label">Fornecedores</label>
+                                <input type="number" id="fornecedores" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="emprestimos-cp" class="form-label">Empréstimos de Curto Prazo</label>
+                                <input type="number" id="emprestimos-cp" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="passivo-nao-circulante" class="form-label">Passivo Não Circulante</label>
+                                <input type="number" id="passivo-nao-circulante" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="emprestimos-lp" class="form-label">Empréstimos de Longo Prazo</label>
+                                <input type="number" id="emprestimos-lp" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="patrimonio-liquido" class="form-label">Patrimônio Líquido</label>
+                                <input type="number" id="patrimonio-liquido" class="form-control financial-input" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="capital-social" class="form-label">Capital Social</label>
+                                <input type="number" id="capital-social" class="form-control financial-input" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-secondary" id="calcular-balanco">Verificar Balanço</button>
+                        <button type="button" class="btn btn-primary" id="salvar-balanco">Salvar Balanço</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de DRE -->
+        <section id="dre" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> Demonstração de Resultados (DRE)</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="ano-dre" class="form-label">Selecione o Ano</label>
+                        <select id="ano-dre" class="form-control" style="max-width: 200px;">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="receita-liquida" class="form-label">Receita Líquida</label>
+                        <input type="number" id="receita-liquida" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="custo-vendas" class="form-label">Custo das Vendas</label>
+                        <input type="number" id="custo-vendas" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="lucro-bruto" class="form-label">Lucro Bruto</label>
+                        <input type="number" id="lucro-bruto" class="form-control financial-input" step="0.01" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="despesas-operacionais" class="form-label">Despesas Operacionais</label>
+                        <input type="number" id="despesas-operacionais" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="despesas-vendas" class="form-label">Despesas com Vendas</label>
+                        <input type="number" id="despesas-vendas" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="despesas-administrativas" class="form-label">Despesas Administrativas</label>
+                        <input type="number" id="despesas-administrativas" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="ebit" class="form-label">EBIT (Lucro Operacional)</label>
+                        <input type="number" id="ebit" class="form-control financial-input" step="0.01" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="resultado-financeiro" class="form-label">Resultado Financeiro</label>
+                        <input type="number" id="resultado-financeiro" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="lucro-antes-ir" class="form-label">Lucro Antes do IR</label>
+                        <input type="number" id="lucro-antes-ir" class="form-control financial-input" step="0.01" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="ir-csll" class="form-label">IR e CSLL</label>
+                        <input type="number" id="ir-csll" class="form-control financial-input" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="lucro-liquido" class="form-label">Lucro Líquido</label>
+                        <input type="number" id="lucro-liquido" class="form-control financial-input" step="0.01" readonly>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-secondary" id="calcular-dre">Calcular DRE</button>
+                        <button type="button" class="btn btn-primary" id="salvar-dre">Salvar DRE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Parâmetros de Valuation -->
+        <section id="parametros" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-sliders-h"></i> Parâmetros de Valuation</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Parâmetros Gerais</h3>
+                            <div class="form-group">
+                                <label for="periodo-projecao" class="form-label">Período de Projeção (anos)</label>
+                                <input type="number" id="periodo-projecao" class="form-control" value="5" min="1" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="taxa-crescimento-perpetuidade" class="form-label">Taxa de Crescimento na Perpetuidade (%)</label>
+                                <input type="number" id="taxa-crescimento-perpetuidade" class="form-control" value="3" step="0.1">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3>WACC (Custo Médio Ponderado de Capital)</h3>
+                            <div class="form-group">
+                                <label for="taxa-livre-risco" class="form-label">Taxa Livre de Risco (%)</label>
+                                <input type="number" id="taxa-livre-risco" class="form-control" value="5" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="premio-risco-mercado" class="form-label">Prêmio de Risco de Mercado (%)</label>
+                                <input type="number" id="premio-risco-mercado" class="form-control" value="6" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="beta" class="form-label">Beta</label>
+                                <input type="number" id="beta" class="form-control" value="1" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="custo-divida" class="form-label">Custo da Dívida (%)</label>
+                                <input type="number" id="custo-divida" class="form-control" value="8" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="aliquota-ir" class="form-label">Alíquota de IR (%)</label>
+                                <input type="number" id="aliquota-ir" class="form-control" value="34" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="percentual-divida" class="form-label">Percentual de Dívida (%)</label>
+                                <input type="number" id="percentual-divida" class="form-control" value="30" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="wacc-calculado" class="form-label">WACC Calculado (%)</label>
+                                <input type="number" id="wacc-calculado" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <h3>Cenários</h3>
+                            <div class="form-group">
+                                <label class="form-label">Selecione os Cenários para Análise</label>
+                                <div class="form-check">
+                                    <input type="checkbox" id="cenario-base" class="form-check-input" checked>
+                                    <label for="cenario-base" class="form-check-label">Cenário Base</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="cenario-otimista" class="form-check-input" checked>
+                                    <label for="cenario-otimista" class="form-check-label">Cenário Otimista</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="cenario-pessimista" class="form-check-input" checked>
+                                    <label for="cenario-pessimista" class="form-check-label">Cenário Pessimista</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3>Ajustes de Cenários</h3>
+                            <div class="form-group">
+                                <label for="ajuste-receita-otimista" class="form-label">Ajuste de Receita - Otimista (%)</label>
+                                <input type="number" id="ajuste-receita-otimista" class="form-control" value="10" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="ajuste-receita-pessimista" class="form-label">Ajuste de Receita - Pessimista (%)</label>
+                                <input type="number" id="ajuste-receita-pessimista" class="form-control" value="-10" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="ajuste-custos-otimista" class="form-label">Ajuste de Custos - Otimista (%)</label>
+                                <input type="number" id="ajuste-custos-otimista" class="form-control" value="-5" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="ajuste-custos-pessimista" class="form-label">Ajuste de Custos - Pessimista (%)</label>
+                                <input type="number" id="ajuste-custos-pessimista" class="form-control" value="5" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-right mt-3">
+                        <button type="button" class="btn btn-secondary" id="calcular-wacc">Calcular WACC</button>
+                        <button type="button" class="btn btn-primary" id="salvar-parametros">Salvar Parâmetros</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Resultados -->
+        <section id="resultados" class="section">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-pie"></i> Resultados do Valuation</h2>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn btn-accent" id="calcular-valuation">Calcular Valuation</button>
+                    </div>
+                    
+                    <div id="resultados-container" style="display: none;">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dashboard-card scenario-card scenario-pessimista">
+                                    <h3>Cenário Pessimista</h3>
+                                    <div class="dashboard-value" id="valor-pessimista">R$ 0,00</div>
+                                    <div class="dashboard-label">Valor da Empresa</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="dashboard-card scenario-card scenario-base">
+                                    <h3>Cenário Base</h3>
+                                    <div class="dashboard-value" id="valor-base">R$ 0,00</div>
+                                    <div class="dashboard-label">Valor da Empresa</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="dashboard-card scenario-card scenario-optimistic">
+                                    <h3>Cenário Otimista</h3>
+                                    <div class="dashboard-value" id="valor-otimista">R$ 0,00</div>
+                                    <div class="dashboard-label">Valor da Empresa</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="dashboard-card">
+                                    <h3>Comparação de Cenários</h3>
+                                    <canvas id="chart-comparacao" class="dashboard-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="dashboard-card">
+                                    <h3>Fluxo de Caixa Projetado - Cenário Base</h3>
+                                    <canvas id="chart-fluxo-caixa" class="dashboard-chart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="dashboard-card">
+                                    <h3>Composição do Valor - Cenário Base</h3>
+                                    <canvas id="chart-composicao" class="dashboard-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-secondary" id="exportar-pdf">Exportar Relatório (PDF)</button>
+                            <button type="button" class="btn btn-secondary" id="exportar-excel">Exportar Dados (Excel)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rodapé -->
+        <footer class="section" style="background-color: var(--primary-color); color: var(--white); padding: var(--spacing-lg) 0;">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img src="images/paes_consultoria_logo.png" alt="Paes Consultoria" style="height: 60px;">
+                        <p class="mt-2">Soluções em valuation e consultoria financeira</p>
+                    </div>
+                    <div class="col text-right">
+                        <p>© 2025 Paes Consultoria</p>
+                        <p>Todos os direitos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal de Alteração de Senha -->
+    <div id="change-password-modal" class="modal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alterar Senha</h3>
+                <button type="button" class="modal-close" id="close-password-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label for="current-password" class="form-label">Senha Atual</label>
+                        <input type="password" id="current-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password" class="form-label">Nova Senha</label>
+                        <input type="password" id="new-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password" class="form-label">Confirmar Nova Senha</label>
+                        <input type="password" id="confirm-password" class="form-control" required>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-secondary" id="cancel-password-change">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Nova Senha</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/additional-features.js"></script>
+    <script src="js/password-manager.js"></script>
+</body>
+</html>
